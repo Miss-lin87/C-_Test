@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Microsoft.VisualBasic;
 
 namespace Player
@@ -14,20 +16,20 @@ namespace Player
             get;
             set;
         }
-        private int Size;
+        private Grid.Grid Grid;
 
         public Player(int Size)
         {
             this.Xposition = 0;
             this.Yposition = 0;
-            this.Size = Size;
+            this.Grid = new(Size);
         }
 
         public Player(int X, int Y, int Size)
         {
             this.Xposition = X;
             this.Yposition = Y;
-            this.Size = Size;
+            this.Grid = new(Size);
         }
 
         public void Move(Directions direction)
@@ -35,31 +37,58 @@ namespace Player
             switch (direction)
             {
                 case Directions.UP:
-                    this.Xposition -= (this.Xposition > 0) ? 1 : 0;
+                    this.Xposition -= CheckBounds(this.Grid.BaseGrid, Directions.UP) ? 1 : 0;
                     break;
                 case Directions.DOWN:
-                    this.Xposition += (this.Xposition < Size) ? 1 : 0;
+                    this.Xposition += CheckBounds(this.Grid.BaseGrid, Directions.DOWN) ? 1 : 0;
                     break;
                 case Directions.LEFT:
-                    this.Yposition -= (this.Yposition > 0) ? 1 : 0;
+                    this.Yposition += CheckBounds(this.Grid.BaseGrid, Directions.LEFT) ? 1 : 0;
                     break;
                 case Directions.RIGHT:
-                    this.Yposition += (this.Yposition < Size) ? 1 : 0;
+                    this.Yposition -= CheckBounds(this.Grid.BaseGrid, Directions.RIGHT) ? 1 : 0;
                     break;
             }
         }
 
-        public Boolean CheckBounds(String[,] grid)
+        public Boolean CheckBounds(String[,] grid, Directions direct)
         {
-            String Positioning = this.Xposition + "|" + this.Yposition;
+            int Xpoint = Xposition;
+            int Ypoint = Yposition;
+            switch (direct)
+            {
+                case Directions.UP:
+                    Xpoint -= 1;
+                    break;
+                case Directions.DOWN:
+                    Xpoint += 1;
+                    break;
+                case Directions.LEFT:
+                    Ypoint += 1;
+                    break;
+                case Directions.RIGHT:
+                    Ypoint -= 1;
+                    break;
+            }
+            return FindCell(grid, Xpoint + "|" + Ypoint);
+        }
+        
+        private Boolean FindCell(string[,] grid, String point)
+        {
             foreach (String cell in grid)
             {
-                if (cell == Positioning)
+                if (cell == point)
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+
+        public void Print()
+        {
+            Console.WriteLine(this.Xposition + "|" + this.Yposition);
         }
     }
 }

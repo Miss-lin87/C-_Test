@@ -25,3 +25,4 @@ C:\Users\loric\.NET projects\TestWebApp\obj\Debug\net9.0\refint\TestWebApp.dll
 C:\Users\loric\.NET projects\TestWebApp\obj\Debug\net9.0\TestWebApp.pdb
 C:\Users\loric\.NET projects\TestWebApp\obj\Debug\net9.0\TestWebApp.genruntimeconfig.cache
 C:\Users\loric\.NET projects\TestWebApp\obj\Debug\net9.0\ref\TestWebApp.dll
+C:\Users\loric\.NET projects\TestWebApp\obj\Debug\net9.0\TestWebApp.sourcelink.json

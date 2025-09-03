@@ -1,46 +1,58 @@
 using System;
+using System.Drawing;
 
 namespace Grid {
-    class Create
+    class Grid
     {
-
-        private static void PopulateGrid(String[,] grid)
+        public String[,] BaseGrid
         {
-            for (int i = 0; i < grid.GetLength(0); i++)
+            get;
+        }
+        public Grid(int size)
+        {
+            this.BaseGrid = Create(size);
+            PopulateGrid();
+        }
+        private void PopulateGrid()
+        {
+            for (int i = 0; i < this.BaseGrid.GetLength(0); i++)
             {
-                //Console.WriteLine(grid.GetLength(0));
-                Console.WriteLine(grid.GetLength(1));
-                for (int j = 0; j < grid.GetLength(1); j++)
+                for (int j = 0; j < this.BaseGrid.GetLength(1); j++)
                 {
-                    grid[i, j] = i + "|" + j;
+                    this.BaseGrid[i, j] = i + "|" + j;
                 }
             }
         }
 
-        public static void Change(String[,] grid, String change)
+        public void Change(String[,] grid, String change)
         {
             foreach (String cell in grid)
             {
                 grid[int.Parse(cell.Split("|")[0]), int.Parse(cell.Split("|")[1])] = change;
             }
         }
-        public static void Print(String[,] grid)
+        public void Print(Player.Player robot)
         {
-            for (int i = 0; i < grid.GetLength(0); i++)
+            for (int i = 0; i < this.BaseGrid.GetLength(0); i++)
             {
-                for (int j = 0; j < grid.GetLength(1); j++)
+                for (int j = 0; j < this.BaseGrid.GetLength(1); j++)
                 {
-                    Console.Write("|" + grid[i, j] + "|");
+                    if (robot.Xposition + "|" + robot.Yposition == this.BaseGrid[i, j])
+                    {
+                        Console.Write("| X |");
+                    }
+                    else
+                    {
+                        Console.Write("|" + this.BaseGrid[i, j] + "|");    
+                    }
                 }
                 Console.WriteLine();
             }
         }
-        public static String[,] New(int cells)
+        private String[,] Create(int cells)
         {
             String[,] temp = new string[cells, cells];
-            PopulateGrid(temp);
             return temp;
-        }
-    
+        }  
     }
 }

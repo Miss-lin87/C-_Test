@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Grid;
@@ -7,39 +8,34 @@ namespace Main
 {
     class Program
     {
-        private static void Print(Player.Player robot)
-        { 
-          Console.WriteLine(robot.Xposition + "|" + robot.Yposition);  
+        private static Directions Input()
+        {
+            String temp = Console.ReadLine();
+            switch (temp)
+            {
+                case "u":
+                    return Directions.UP;
+                case "d":
+                    return Directions.DOWN;
+                case "l":
+                    return Directions.LEFT;
+                case "r":
+                    return Directions.RIGHT;
+            }
+            return Directions.DOWN;
         }
-
         public static void Main(string[] args)
         {
-            Grid.Create create = new Grid.Create();
-            String[,] Grid = Create.New(5);
+            Grid.Grid Grid = new(5);
             Player.Player robot = new(0, 0, 5);
-            Print(robot);
-            robot.Move(Directions.DOWN);
-            Print(robot);
-            robot.Move(Directions.UP);
-            Print(robot);
-            robot.Move(Directions.UP);
-            Print(robot);
-            robot.Move(Directions.LEFT);
-            Print(robot);
-            robot.Move(Directions.RIGHT);
-            Print(robot);
-            robot.Move(Directions.RIGHT);
-            Print(robot);
-            Create.Print(Grid);
-            Console.WriteLine();
-
-            Player.Player robot2 = new(5, 5, 5);
-            Player.Player robot3 = new(8, 8, 5);
-
-            Console.WriteLine(robot2.CheckBounds(Grid));
-            Console.WriteLine(robot3.CheckBounds(Grid));
-            Console.WriteLine(robot.CheckBounds(Grid));
+            Boolean GameOn = true;
+            do
+            {
+                Directions InputDirect = Input();
+                robot.Move(InputDirect);
+                robot.Print();
+                Grid.Print(robot);
+            } while (GameOn);
         }
     }
 }
-
